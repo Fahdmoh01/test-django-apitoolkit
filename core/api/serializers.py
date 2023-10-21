@@ -3,22 +3,22 @@ from rest_framework.response import Response
 
 from . models import *
 
-class TestModelSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TestModel
+        model = User
         fields = '__all__'
 
 
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TestModel
-        fields = ('name', 'age', 'email', 'role')
+        model = User
+        fields = ('name', 'age', 'email','password', 'role')
         extra_kwargs = {'password':{'write_only': True}}
 
     
     def create(self, validated_data):
-        user = TestModel.objects.create_user(
+        user = User.objects.create_user(
             email= validated_data['email'],
             password= validated_data['password'],
             name= validated_data['name'],

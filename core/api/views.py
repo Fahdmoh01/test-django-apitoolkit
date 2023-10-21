@@ -15,13 +15,13 @@ class CUDTestModelAPI(APIView):
         age = request.data.get("age")
         email = request.data.get("email")
 
-        testModel = TestModel.objects.create(
+        testModel = User.objects.create(
             name  = name,
             age= age,
             email= email
         )
 
-        serializer = TestModelSerializer(testModel, many=False)
+        serializer = UserSerializer(testModel, many=False)
         return Response({
             "testModel": serializer.data
         },status=status.HTTP_201_CREATED)
@@ -30,7 +30,7 @@ class CUDTestModelAPI(APIView):
     def put(self, request, *args, **kwargs):
         '''put method to update TestModels'''
         id = request.data.get("id")
-        testModel = TestModel.objects.filter(id=id).first() #noqa
+        testModel = User.objects.filter(id=id).first() #noqa
         name = request.data.get("name")
         email = request.data.get("email")
         age = request.data.get("age")
@@ -40,7 +40,7 @@ class CUDTestModelAPI(APIView):
             testModel.age = age
             testModel.email = email
             testModel.save()
-            serializer = TestModelSerializer(testModel, many=False)
+            serializer = UserSerializer(testModel, many=False)
             return Response({
                 "testModel":serializer.data
             },status=status.HTTP_200_OK)
@@ -52,7 +52,7 @@ class CUDTestModelAPI(APIView):
     def delete(self, request, *args, **kwargs):
         '''delte method to delete TestModels'''
         id = request.data.get("id")
-        testModel = TestModel.objects.filter(id=id).first() #noqa
+        testModel = User.objects.filter(id=id).first() #noqa
         
         if testModel:
             testModel.delete()

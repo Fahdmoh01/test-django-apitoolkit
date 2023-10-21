@@ -5,7 +5,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 
-from . serializers import TestModelSerializer,RegisterSerializer
+from . serializers import UserSerializer,RegisterSerializer
 
 class LoginApI(KnoxLoginView):
     '''For handling user logins'''
@@ -21,7 +21,7 @@ class LoginApI(KnoxLoginView):
 
         AuthToken.objects.filter(user=user).delete()
         return Response({
-            "user": TestModelSerializer(user).data,
+            "user": UserSerializer(user).data,
             "token":AuthToken.objects.create(user)[1],
         }, status=status.HTTP_200_OK)
     
@@ -37,6 +37,6 @@ class SignUpAPI(generics.GenericAPIView):
         user = serializer.save()
 
         return Response({
-            "user": TestModelSerializer(user).data,
+            "user": RegisterSerializer(user).data,
             "token": AuthToken.objects.create(user)[1],
         }, status=status.HTTP_201_CREATED)
